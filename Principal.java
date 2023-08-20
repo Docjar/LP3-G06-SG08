@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class Principal {
 
 	public static void main(String[] args) {
+		System.out.println("Primer cambio es un Hola mundo");
 		int vida, rp;
 		boolean fl = false;
 		vida = 0;
