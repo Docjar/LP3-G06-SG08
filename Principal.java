@@ -25,7 +25,7 @@ public class Principal {
             System.out.println("¡Felicidades! Has ganado un premio.");
             System.out.println("Tu premio es un vale para una cena en un restaurante elegante.");
         } else {
-            System.out.println("Perdiste...");
+            System.out.println("Ups, perdiste...");
         }
     }
 }
