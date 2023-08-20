@@ -6,6 +6,7 @@ public class Principal {
 
 	public static void main(String[] args) {
 		System.out.println("Primer cambio es un Hola mundo");
+		System.out.println("Segundo cambio es un Hello World");
 		int vida, rp;
 		boolean fl = false;
 		vida = 0;
