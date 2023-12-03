@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package ee1;
 import java.sql.ResultSetMetaData;
 import java.awt.GridBagConstraints;
@@ -22,7 +19,6 @@ public class GUI extends JFrame{
     private JButton botonAplicar;
     private JTextField ingreso;
     private JTextField filtro;
-    private JLabel f;
     
     public GUI() throws Exception{
         super("Displaying Query Results");
@@ -30,8 +26,8 @@ public class GUI extends JFrame{
 
         GridBagConstraints gb = new GridBagConstraints();
         ingreso = new JTextField(30);
-        gb.gridx = 0;
-        gb.gridy = 0;
+        gb.gridx = 0; //columna
+        gb.gridy = 0; //Fila
         gb.gridwidth = 2;
         gb.fill = GridBagConstraints.HORIZONTAL;
         add(ingreso,gb);
@@ -43,10 +39,8 @@ public class GUI extends JFrame{
                 String texto = ingreso.getText();
                 if(texto == null || texto.trim().isEmpty()){
                     JOptionPane.showMessageDialog(null, "Ingrese una Query");
-
                 }else{
-
-                    query();
+                    query(); //Realiza la consulta con el texto ingresado
                 }
         }
         });
@@ -55,11 +49,13 @@ public class GUI extends JFrame{
         gb.gridwidth =1;
         gb.fill = GridBagConstraints.NONE;
         add(botonQuery,gb);
-        infoBd();
+        
+        infoBd(); //muestra la base de datos
+        
         JLabel filtroLabel = new JLabel("Filtro");
-        gb.gridx = 0; // Columna 0
-        gb.gridy = 3; // Fila 3
-        gb.gridwidth = 1; // Ocupa 1 columna
+        gb.gridx = 0;
+        gb.gridy = 3;
+        gb.gridwidth = 1;
         gb.fill = GridBagConstraints.HORIZONTAL;
         add(filtroLabel, gb);
 
@@ -140,14 +136,14 @@ public class GUI extends JFrame{
                 if (query.startsWith("select") || query.startsWith("SELECT")) {
                 // Si la consulta es SELECT, actualiza el modelo de la tabla
                 ResultSet rs = pst.executeQuery();
-                updateTableModel(rs);
+                updateTabla(rs);
                 
             } else {
                 int affectedRows = pst.executeUpdate();
             if (affectedRows > 0) {
                 PreparedStatement selectStatement = con.prepareStatement("SELECT * FROM persona");
                 ResultSet rs = selectStatement.executeQuery();
-                updateTableModel(rs);
+                updateTabla(rs);
             }
             }
             }catch(SQLException e){  
@@ -159,14 +155,14 @@ public class GUI extends JFrame{
         }
 
     }
-    private void updateTableModel(ResultSet rs) throws SQLException {
+    private void updateTabla(ResultSet rs) throws SQLException {
         ResultSetMetaData rm = rs.getMetaData();
         String[] columnNames = new String[rm.getColumnCount()];
         for (int i = 0; i < columnNames.length; i++) {
             columnNames[i] = rm.getColumnName(i + 1);
         }
 
-        DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0) {
+        DefaultTableModel tabl = new DefaultTableModel(columnNames, 0) {
             @Override
             public boolean isCellEditable(int fila, int columna) {
                 return false;
@@ -178,10 +174,10 @@ public class GUI extends JFrame{
             for (int i = 0; i < row.length; i++) {
                 row[i] = rs.getObject(i + 1);
             }
-            tableModel.addRow(row);
+            tabl.addRow(row);
         }
 
-        tabla.setModel(tableModel);
+        tabla.setModel(tabl);
         revalidate();
         repaint();
     }
